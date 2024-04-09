@@ -33,6 +33,7 @@ public class GraphicsDealing extends JPanel{
                 oldX = x;
                 oldY = y;
                 if (piece != null && piece.getColor().equals(turn)) {
+                    removePieceAt(oldY, oldX);
                     draggedPiece = piece;
                     dragX = x;
                     dragY = y;
@@ -45,16 +46,18 @@ public class GraphicsDealing extends JPanel{
                     int x = e.getX();
                     int y = e.getY();
                     if ((y-25/100) == (oldY-25/100) && (x-25/100) == (oldX-25/100)){
-                        draggedPiece = null;
+                        setPiece(draggedPiece.toString(), (oldY-25)/100, (oldX-25)/100);
                     } else {
                         if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
-                            removePieceAt(oldY, oldX);
+                            
                             setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
                             if (turn.equals("White")){
                                 turn = "Black";
                             }else{
                                 turn = "White";
                             }
+                        } else {
+                            setPiece(draggedPiece.toString(), (oldY-25)/100, (oldX-25)/100);
                         }
                     }
                     draggedPiece = null;
