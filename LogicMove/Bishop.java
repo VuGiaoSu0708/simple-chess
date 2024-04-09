@@ -2,14 +2,14 @@ package LogicMove;
 
 import java.lang.Math;
 
-public class Rook extends ChessPieces {
+public class Bishop extends ChessPieces {
     private int x;
     private int y;
     private String color;
     private String name;
     private boolean isAlive;
 
-    public Rook(int x, int y, String color, String name) {
+    public Bishop(int x, int y, String color, String name) {
         super(x, y, color, name);
         this.x = x;
         this.y = y;
@@ -53,8 +53,7 @@ public class Rook extends ChessPieces {
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         int dx, dy;
-
-        if (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1]) {
+        if (Math.abs(newPosition[0] - currentPosition[0]) != Math.abs(newPosition[1] - currentPosition[1])) {
             return false;
         }
         if (newPosition[0] - currentPosition[0] == 0) {

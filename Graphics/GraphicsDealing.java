@@ -1,7 +1,5 @@
 package Graphics;
-import LogicMove.Board;
-import LogicMove.ChessPieces;
-import LogicMove.Rook;
+import LogicMove.*;
 
 import java.util.*;
 import javax.swing.*;
@@ -20,6 +18,7 @@ public class GraphicsDealing extends JPanel{
     private int oldX = -1;
     private int oldY = -1;
     private ChessPieces draggedPiece = null;
+    private String turn = "White";
 
 
     public GraphicsDealing(){
@@ -34,7 +33,7 @@ public class GraphicsDealing extends JPanel{
                 ChessPieces piece = getPieceAt(y, x);
                 oldX = x;
                 oldY = y;
-                if (piece != null) {
+                if (piece != null && piece.getColor().equals(turn)) {
                     draggedPiece = piece;
                     dragX = x;
                     dragY = y;
@@ -49,6 +48,11 @@ public class GraphicsDealing extends JPanel{
                     if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
                         removePieceAt(oldY, oldX);
                         setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
+                        if (turn.equals("White")){
+                            turn = "Black";
+                        }else{
+                            turn = "White";
+                        }
                     }
                     draggedPiece = null;
                 }
@@ -121,18 +125,30 @@ public class GraphicsDealing extends JPanel{
                         board.setPiece(piece, i, j);
                     }else if (j == 1 || j == 6){
                     }else if (j == 2 || j == 5){
+                        ChessPieces piece = new Bishop(x, y, "Black", "Bishop");
+                        board.setPiece(piece, i, j);
                     }else if (j == 3){
+                        ChessPieces piece = new Queen(x, y, "Black", "Queen");
+                        board.setPiece(piece, i, j);
                     }else if (j == 4){
                     }
                 } else if (i == 1){
+                    ChessPieces piece = new Pawn(x, y, "Black", "Pawn");
+                    board.setPiece(piece, i, j);
                 } else if (i == 6){
+                    ChessPieces piece = new Pawn(x, y, "White", "Pawn");
+                    board.setPiece(piece, i, j);
                 } else if (i == 7){
                     if (j == 0 || j == 7){
                         ChessPieces piece = new Rook(x, y, "White", "Rook");
                         board.setPiece(piece, i, j);
                     }else if (j == 1 || j == 6){
                     }else if (j == 2 || j == 5){
+                        ChessPieces piece = new Bishop(x, y, "White", "Bishop");
+                        board.setPiece(piece, i, j);
                     }else if (j == 3){
+                        ChessPieces piece = new Queen(x, y, "White", "Queen");
+                        board.setPiece(piece, i, j);
                     }else if (j == 4){
                     }
                 }
@@ -163,6 +179,12 @@ public class GraphicsDealing extends JPanel{
         String[] pieceInfo = piece.split("_");
         if (pieceInfo[1].equals("Rook")){
             board.setPiece(new Rook(x, y, pieceInfo[0], pieceInfo[1]), x, y);
-        } 
+        } else if (pieceInfo[1].equals("Bishop")){
+            board.setPiece(new Bishop(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        } else if (pieceInfo[1].equals("Queen")){
+            board.setPiece(new Queen(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        } else if (pieceInfo[1].equals("Pawn")){
+            board.setPiece(new Pawn(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        }
     }
 }
