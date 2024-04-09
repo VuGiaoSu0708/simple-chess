@@ -52,16 +52,15 @@ public class Pawn extends ChessPieces {
     }
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
-        int dx, dy;
-        if (this.getColor().equals("white")) {
+        if (this.getColor().equals("White")) {
             if (currentPosition[0] == 6) {
                 if (newPosition[0] == currentPosition[0] - 1 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null) {
                     return true;
                 }
-                if (newPosition[0] == currentPosition[0] - 2 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null && board[newPosition[0] + 1][newPosition[1]] == null) {
+                else if (newPosition[0] == currentPosition[0] - 2 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null && board[newPosition[0] + 1][newPosition[1]] == null) {
                     return true;
                 }
-                if (newPosition[0] == currentPosition[0] - 1 && Math.abs(newPosition[1] - currentPosition[1]) == 1 && board[newPosition[0]][newPosition[1]] != null) {
+                else if (newPosition[0] == currentPosition[0] - 1 && Math.abs(newPosition[1] - currentPosition[1]) == 1 && board[newPosition[0]][newPosition[1]] != null) {
                     return canKill(newPosition, currentPosition, board);
                 }
             } else {
@@ -77,10 +76,10 @@ public class Pawn extends ChessPieces {
                 if (newPosition[0] == currentPosition[0] + 1 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null) {
                     return true;
                 }
-                if (newPosition[0] == currentPosition[0] + 2 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null && board[newPosition[0] - 1][newPosition[1]] == null) {
+                else if (newPosition[0] == currentPosition[0] + 2 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null && board[newPosition[0] - 1][newPosition[1]] == null) {
                     return true;
                 }
-                if (newPosition[0] == currentPosition[0] + 1 && Math.abs(newPosition[1] - currentPosition[1]) == 1 && board[newPosition[0]][newPosition[1]] != null) {
+                else if (newPosition[0] == currentPosition[0] + 1 && Math.abs(newPosition[1] - currentPosition[1]) == 1 && board[newPosition[0]][newPosition[1]] != null) {
                     return canKill(newPosition, currentPosition, board);
                 }
             } else {
@@ -92,31 +91,7 @@ public class Pawn extends ChessPieces {
                 }
             }
         }
-        if (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1]) {
-            return false;
-        }
-        if (newPosition[0] - currentPosition[0] == 0) {
-            dx = 0;
-        } else {
-            dx = (newPosition[0] - currentPosition[0]) / Math.abs(newPosition[0] - currentPosition[0]);
-        }
-        if (newPosition[1] - currentPosition[1] == 0) {
-            dy = 0;
-        } else {
-            dy = (newPosition[1] - currentPosition[1]) / Math.abs(newPosition[1] - currentPosition[1]);
-        }
-        
-        while (currentPosition[0] != newPosition[0] || currentPosition[1] != newPosition[1]) {
-            currentPosition[0] += dx;
-            currentPosition[1] += dy;
-            if (currentPosition[0] == newPosition[0] && currentPosition[1] == newPosition[1] && board[newPosition[0]][newPosition[1]] != null) {
-                return canKill(newPosition, currentPosition, board);
-            }
-            if (board[currentPosition[0]][currentPosition[1]] != null) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     public boolean canKill(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {

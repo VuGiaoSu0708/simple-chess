@@ -1,7 +1,6 @@
 package Graphics;
 import LogicMove.*;
 
-import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -45,13 +44,17 @@ public class GraphicsDealing extends JPanel{
                 if (draggedPiece != null) {
                     int x = e.getX();
                     int y = e.getY();
-                    if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
-                        removePieceAt(oldY, oldX);
-                        setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
-                        if (turn.equals("White")){
-                            turn = "Black";
-                        }else{
-                            turn = "White";
+                    if ((y-25/100) == (oldY-25/100) && (x-25/100) == (oldX-25/100)){
+                        draggedPiece = null;
+                    } else {
+                        if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
+                            removePieceAt(oldY, oldX);
+                            setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
+                            if (turn.equals("White")){
+                                turn = "Black";
+                            }else{
+                                turn = "White";
+                            }
                         }
                     }
                     draggedPiece = null;
@@ -124,6 +127,8 @@ public class GraphicsDealing extends JPanel{
                         ChessPieces piece = new Rook(x, y, "Black", "Rook");
                         board.setPiece(piece, i, j);
                     }else if (j == 1 || j == 6){
+                        ChessPieces piece = new Knight(x, y, "Black", "Knight");
+                        board.setPiece(piece, i, j);
                     }else if (j == 2 || j == 5){
                         ChessPieces piece = new Bishop(x, y, "Black", "Bishop");
                         board.setPiece(piece, i, j);
@@ -131,6 +136,8 @@ public class GraphicsDealing extends JPanel{
                         ChessPieces piece = new Queen(x, y, "Black", "Queen");
                         board.setPiece(piece, i, j);
                     }else if (j == 4){
+                        ChessPieces piece = new King(x, y, "Black", "King");
+                        board.setPiece(piece, i, j);
                     }
                 } else if (i == 1){
                     ChessPieces piece = new Pawn(x, y, "Black", "Pawn");
@@ -143,6 +150,8 @@ public class GraphicsDealing extends JPanel{
                         ChessPieces piece = new Rook(x, y, "White", "Rook");
                         board.setPiece(piece, i, j);
                     }else if (j == 1 || j == 6){
+                        ChessPieces piece = new Knight(x, y, "White", "Knight");
+                        board.setPiece(piece, i, j);
                     }else if (j == 2 || j == 5){
                         ChessPieces piece = new Bishop(x, y, "White", "Bishop");
                         board.setPiece(piece, i, j);
@@ -150,6 +159,8 @@ public class GraphicsDealing extends JPanel{
                         ChessPieces piece = new Queen(x, y, "White", "Queen");
                         board.setPiece(piece, i, j);
                     }else if (j == 4){
+                        ChessPieces piece = new King(x, y, "White", "King");
+                        board.setPiece(piece, i, j);
                     }
                 }
                 x += 100;
@@ -185,6 +196,10 @@ public class GraphicsDealing extends JPanel{
             board.setPiece(new Queen(x, y, pieceInfo[0], pieceInfo[1]), x, y);
         } else if (pieceInfo[1].equals("Pawn")){
             board.setPiece(new Pawn(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        } else if (pieceInfo[1].equals("King")){
+            board.setPiece(new King(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        } else if (pieceInfo[1].equals("Knight")){
+            board.setPiece(new Knight(x, y, pieceInfo[0], pieceInfo[1]), x, y);
         }
     }
 }
