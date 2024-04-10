@@ -52,6 +52,9 @@ public class King extends ChessPieces {
     }
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
+        if (newPosition[0] == currentPosition[0] && newPosition[1] == currentPosition[1]) {
+            return false;
+        }
         int dx, dy;
         if (Math.abs(newPosition[0] - currentPosition[0]) > 1 || Math.abs(newPosition[1] - currentPosition[1]) > 1) {
             return false;
