@@ -54,6 +54,10 @@ public class Queen extends ChessPieces {
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         int dx, dy;
         String move="";
+        if (newPosition[0] == currentPosition[0] && newPosition[1] == currentPosition[1]) {
+            return false;
+        }
+
         if ((Math.abs(newPosition[0] - currentPosition[0]) != Math.abs(newPosition[1] - currentPosition[1])) && (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1])) {
             if ((newPosition[0] == currentPosition[0] && newPosition[1] != currentPosition[1]) || (newPosition[0] != currentPosition[0] && newPosition[1] == currentPosition[1])){
                 move = "Horizontal or Vertical";

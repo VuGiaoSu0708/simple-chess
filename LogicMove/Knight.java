@@ -52,7 +52,9 @@ public class Knight extends ChessPieces {
     }
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
-
+        if (newPosition[0] == currentPosition[0] && newPosition[1] == currentPosition[1]) {
+            return false;
+        }
         if (Math.abs(newPosition[0] - currentPosition[0]) == 2 && Math.abs(newPosition[1] - currentPosition[1]) == 1 || Math.abs(newPosition[0] - currentPosition[0]) == 1 && Math.abs(newPosition[1] - currentPosition[1]) == 2) {
             if (board[newPosition[0]][newPosition[1]] == null) {
                 return true;

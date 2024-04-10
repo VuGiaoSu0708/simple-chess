@@ -53,7 +53,9 @@ public class Rook extends ChessPieces {
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         int dx, dy;
-
+        if (newPosition[0] == currentPosition[0] && newPosition[1] == currentPosition[1]) {
+            return false;
+        }
         if (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1]) {
             return false;
         }

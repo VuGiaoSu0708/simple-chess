@@ -52,6 +52,9 @@ public class Pawn extends ChessPieces {
     }
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
+        if (newPosition[0] == currentPosition[0] && newPosition[1] == currentPosition[1]) {
+            return false;
+        }
         if (this.getColor().equals("White")) {
             if (currentPosition[0] == 6) {
                 if (newPosition[0] == currentPosition[0] - 1 && newPosition[1] == currentPosition[1] && board[newPosition[0]][newPosition[1]] == null) {

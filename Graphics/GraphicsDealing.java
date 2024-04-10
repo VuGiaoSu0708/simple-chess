@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.lang.reflect.Array;
 
 
 public class GraphicsDealing extends JPanel{
@@ -20,6 +21,8 @@ public class GraphicsDealing extends JPanel{
     private ChessPieces draggedPiece = null;
     private String turn = "White";
     private ArrayList<ArrayList<Integer>> prediction = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<ArrayList<Integer>> choosing = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<ArrayList<Integer>> killable = new ArrayList<ArrayList<Integer>>();
 
 
     public GraphicsDealing(){
@@ -53,16 +56,24 @@ public class GraphicsDealing extends JPanel{
                     } else {
                         if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
                             prediction.clear();
+                            choosing.clear();
+                            killable.clear();
                             setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
                             if (turn.equals("White")){
                                 turn = "Black";
-                            }else{
+                            }else if (turn.equals("Black")){
                                 turn = "White";
                             }
                         } else {
                             setPiece(draggedPiece.toString(), (oldY-25)/100, (oldX-25)/100);
                             prediction.clear();
+                            choosing.clear();
+                            killable.clear();
                         }
+                    }
+                    if (wasKingDead(turn)){
+                        System.out.println("Game Over");
+                        turn = "End";
                     }
                     draggedPiece = null;
                 }
@@ -127,6 +138,14 @@ public class GraphicsDealing extends JPanel{
     public void drawPrediction(Graphics g){
         for (ArrayList<Integer> integers : prediction) {
             g.setColor(Color.cyan);
+            g.fillRect(integers.get(1)*100, integers.get(0)*100, 100, 100);
+        }
+        for (ArrayList<Integer> integers : choosing) {
+            g.setColor(Color.yellow);
+            g.fillRect(integers.get(1)*100, integers.get(0)*100, 100, 100);
+        }
+        for (ArrayList<Integer> integers : killable) {
+            g.setColor(Color.red);
             g.fillRect(integers.get(1)*100, integers.get(0)*100, 100, 100);
         }
     }
@@ -219,16 +238,33 @@ public class GraphicsDealing extends JPanel{
 
     public void getAllPredictions(int x, int y){
         ChessPieces piece = getPieceAt(x, y);
+
         if (piece != null && piece.getColor().equals(turn)){
             final int[] currentPosition = {(x-25)/100, (y-25)/100};
+            choosing.add(new ArrayList<Integer>(Arrays.asList(currentPosition[0], currentPosition[1])));
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     int[] current = Arrays.copyOf(currentPosition, currentPosition.length);
                     if (piece.canMove(new int[]{i, j}, current, board.getPieces())){
                         prediction.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+                        if (board.getPiece(i, j) != null){
+                            killable.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+                        }
                     }
                 }
             }
         }
+    }
+
+    public boolean wasKingDead(String turn){
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                ChessPieces piece = board.getPiece(i, j);
+                if (piece != null && piece.getName().equals("King") && piece.getColor().equals(turn) && piece.isAlive()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
