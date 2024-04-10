@@ -53,7 +53,17 @@ public class Queen extends ChessPieces {
 
     public boolean canMove(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         int dx, dy;
-
+        String move="";
+        if ((Math.abs(newPosition[0] - currentPosition[0]) != Math.abs(newPosition[1] - currentPosition[1])) && (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1])) {
+            if ((newPosition[0] == currentPosition[0] && newPosition[1] != currentPosition[1]) || (newPosition[0] != currentPosition[0] && newPosition[1] == currentPosition[1])){
+                move = "Horizontal or Vertical";
+            }
+            else {
+                return false;
+            }
+        } else {
+            move = "Diagonal";
+        }
         if (newPosition[0] != currentPosition[0] && newPosition[1] != currentPosition[1]) {
             if (Math.abs(newPosition[0] - currentPosition[0]) != Math.abs(newPosition[1] - currentPosition[1])) {
                 return false;
@@ -69,7 +79,6 @@ public class Queen extends ChessPieces {
         } else {
             dy = (newPosition[1] - currentPosition[1]) / Math.abs(newPosition[1] - currentPosition[1]);
         }
-        
         while (currentPosition[0] != newPosition[0] || currentPosition[1] != newPosition[1]) {
             currentPosition[0] += dx;
             currentPosition[1] += dy;
@@ -85,8 +94,10 @@ public class Queen extends ChessPieces {
 
     public boolean canKill(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         if (board[newPosition[0]][newPosition[1]] != null) {
-            if (board[newPosition[0]][newPosition[1]].getColor() != this.getColor()) {
+            if (!board[newPosition[0]][newPosition[1]].getColor().equals(this.getColor())) {
                 return true;
+            } else {
+                return false;
             }
         }
         return false;

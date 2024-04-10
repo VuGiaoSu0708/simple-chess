@@ -1,6 +1,7 @@
 package Graphics;
 import LogicMove.*;
 
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -18,6 +19,7 @@ public class GraphicsDealing extends JPanel{
     private int oldY = -1;
     private ChessPieces draggedPiece = null;
     private String turn = "White";
+    private ArrayList<ArrayList<Integer>> prediction = new ArrayList<ArrayList<Integer>>();
 
 
     public GraphicsDealing(){
@@ -33,6 +35,7 @@ public class GraphicsDealing extends JPanel{
                 oldX = x;
                 oldY = y;
                 if (piece != null && piece.getColor().equals(turn)) {
+                    getAllPredictions(oldY, oldX);
                     removePieceAt(oldY, oldX);
                     draggedPiece = piece;
                     dragX = x;
@@ -49,7 +52,7 @@ public class GraphicsDealing extends JPanel{
                         setPiece(draggedPiece.toString(), (oldY-25)/100, (oldX-25)/100);
                     } else {
                         if  (draggedPiece.canMove(new int[]{(y-25)/100, (x-25)/100}, new int[]{(oldY-25)/100, (oldX-25)/100}, board.getPieces())){
-                            
+                            prediction.clear();
                             setPiece(draggedPiece.toString(), (y-25)/100, (x-25)/100);
                             if (turn.equals("White")){
                                 turn = "Black";
@@ -58,6 +61,7 @@ public class GraphicsDealing extends JPanel{
                             }
                         } else {
                             setPiece(draggedPiece.toString(), (oldY-25)/100, (oldX-25)/100);
+                            prediction.clear();
                         }
                     }
                     draggedPiece = null;
@@ -81,8 +85,8 @@ public class GraphicsDealing extends JPanel{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         drawBoard(g);
+        drawPrediction(g);
         drawPieces(g);
-
         if (draggedPiece != null) {
             g.drawImage(assets.getImage(draggedPiece.toString()).getImage(), dragX, dragY, 50, 50, null);
         }
@@ -117,6 +121,13 @@ public class GraphicsDealing extends JPanel{
             }
             x = 25;
             y += 100;
+        }
+    }
+
+    public void drawPrediction(Graphics g){
+        for (ArrayList<Integer> integers : prediction) {
+            g.setColor(Color.cyan);
+            g.fillRect(integers.get(1)*100, integers.get(0)*100, 100, 100);
         }
     }
 
@@ -203,6 +214,21 @@ public class GraphicsDealing extends JPanel{
             board.setPiece(new King(x, y, pieceInfo[0], pieceInfo[1]), x, y);
         } else if (pieceInfo[1].equals("Knight")){
             board.setPiece(new Knight(x, y, pieceInfo[0], pieceInfo[1]), x, y);
+        }
+    }
+
+    public void getAllPredictions(int x, int y){
+        ChessPieces piece = getPieceAt(x, y);
+        if (piece != null && piece.getColor().equals(turn)){
+            final int[] currentPosition = {(x-25)/100, (y-25)/100};
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    int[] current = Arrays.copyOf(currentPosition, currentPosition.length);
+                    if (piece.canMove(new int[]{i, j}, current, board.getPieces())){
+                        prediction.add(new ArrayList<Integer>(Arrays.asList(i, j)));
+                    }
+                }
+            }
         }
     }
 }

@@ -31,20 +31,20 @@ public class AssetsLoading {
     }
 
     private void AssetsGetDirectory(){
-        assets.put("White_Pawn","w_pawn_png_128px.png");
-        assets.put("White_Rook","w_rook_png_128px.png");
-        assets.put("White_Knight","w_knight_png_128px.png");
-        assets.put("White_Bishop","w_bishop_png_128px.png");
-        assets.put("White_Queen","w_queen_png_128px.png");
-        assets.put("White_King","w_king_png_128px.png");
-        assets.put("Black_Pawn","b_pawn_png_128px.png");
-        assets.put("Black_Rook","b_rook_png_128px.png");
-        assets.put("Black_Knight","b_knight_png_128px.png");
-        assets.put("Black_Bishop","b_bishop_png_128px.png");
-        assets.put("Black_Queen","b_queen_png_128px.png");
-        assets.put("Black_King","b_king_png_128px.png");
-        assets.put("Dark_Tiles","brown_dark_png_128px.png");
-        assets.put("Light_Tiles","brown_light_png_128px.png");
+        assets.put("White_Pawn","w_pawn_png_shadow_128px.png");
+        assets.put("White_Rook","w_rook_png_shadow_128px.png");
+        assets.put("White_Knight","w_knight_png_shadow_128px.png");
+        assets.put("White_Bishop","w_bishop_png_shadow_128px.png");
+        assets.put("White_Queen","w_queen_png_shadow_128px.png");
+        assets.put("White_King","w_king_png_shadow_128px.png");
+        assets.put("Black_Pawn","b_pawn_png_shadow_128px.png");
+        assets.put("Black_Rook","b_rook_png_shadow_128px.png");
+        assets.put("Black_Knight","b_knight_png_shadow_128px.png");
+        assets.put("Black_Bishop","b_bishop_png_shadow_128px.png");
+        assets.put("Black_Queen","b_queen_png_shadow_128px.png");
+        assets.put("Black_King","b_king_png_shadow_128px.png");
+        assets.put("Dark_Tiles","brown_dark_png_shadow_128px.png");
+        assets.put("Light_Tiles","brown_light_png_shadow_128px.png");
     }
 
 }

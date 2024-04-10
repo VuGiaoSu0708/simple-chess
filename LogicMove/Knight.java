@@ -66,7 +66,7 @@ public class Knight extends ChessPieces {
 
     public boolean canKill(int[] newPosition, int[] currentPosition, ChessPieces[][] board) {
         if (board[newPosition[0]][newPosition[1]] != null) {
-            if (board[newPosition[0]][newPosition[1]].getColor() != this.getColor()) {
+            if (!board[newPosition[0]][newPosition[1]].getColor().equals(this.getColor())) {
                 return true;
             }
         }
